@@ -5,18 +5,15 @@ out=${1:?Usage: install.sh OUTPUT EXPECT-PREFIX}
 expect_prefix=${2:?Usage: install.sh OUTPUT EXPECT-PREFIX}
 
 bin="$out/bin"
-libexec="$out/libexec/confusion-mdl"
-share="$out/share/confusion-mdl"
-doc="$out/share/doc/confusion-mdl-zork"
+libexec="$out/libexec/zork-vaxum-mdl"
+share="$out/share/zork-vaxum-mdl"
+doc="$out/share/doc/zork-vaxum-mdl"
 
 mkdir -p "$bin" "$libexec" "$share" "$doc"
 
 # Expect is used by the 1979 and 1981 Continue paths.
 test -x "$expect_prefix/bin/expect"
 ln -s "$expect_prefix/bin/expect" "$libexec/expect"
-
-# Confusion MDL interpreter.
-install -m755 confusion_patched/mdli "$bin/mdli"
 
 # Dungeon 3.2b executable, source, documentation, and data.
 cp -R dungeon_3_2b "$share/"
@@ -27,7 +24,7 @@ for version in 771212 780124 791211 810722; do
     cp -R "mdlzork_$version/patched_confusion" \
         "$share/mdlzork_$version/"
 done
-
+xg
 # Additional reference/source trees.
 for directory in \
     mdlzork_780402 \
