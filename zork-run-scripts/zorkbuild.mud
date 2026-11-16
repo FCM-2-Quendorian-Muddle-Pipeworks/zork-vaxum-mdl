@@ -21,6 +21,16 @@
       <PRINC ,NL>
       <QUIT>)>>
 
+<PRINC "Building Dungeon 3.2b">
+<PRINC ,NL>
+
+<RUN-CHECK
+  <GIRGOL-EXECUTE
+    "make"
+    ["-C" "dungeon_3_2b" "FC=gfortran"]
+    "">
+  "Dungeon 3.2b build">
+      
 <DEFINE REBUILD-IMAGE (DIR)
   <PRINC "Building ">
   <PRINC .DIR>
