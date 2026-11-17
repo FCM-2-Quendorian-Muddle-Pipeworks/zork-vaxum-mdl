@@ -28,21 +28,15 @@
     <PRINC .VERSION>
     <PRINC ,NL>
 
-    <INSTALL-RUN-CHECK
+     <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE "rm" ["-f" .SEED] "">
       <STRING "remove previous seed for " .VERSION>>
 
-    <INSTALL-RUN-CHECK
+     <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
-        ,MDLI
-        []
-        <STRING
-          "<FLOAD "
-          <ASCII 34>
-          "run.mud"
-          <ASCII 34>
-          ">"
-          ,NL>>
+       ,MDLI
+       ["-f" "run.mud"]
+       "">
       <STRING "generate seed for " .VERSION>>
 
     <INSTALL-RUN-CHECK
