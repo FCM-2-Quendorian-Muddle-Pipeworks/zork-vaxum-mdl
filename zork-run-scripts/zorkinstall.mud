@@ -2,10 +2,18 @@
 <SETG ROOT <GIRGOL-GETCWD>>
 <SETG MDLI "mdli">
 
-<DEFINE INSTALL-CHECK (STATUS OPERATION)
+<DEFINE INSTALL-CHECK (RESULT OPERATION)
+  <COND
+    (<NOT .RESULT>
+      <PRINC "zorkinstall: operation failed: ">
+      <PRINC .OPERATION>
+      <PRINC ,NL>
+      <QUIT>)>>
+
+<DEFINE INSTALL-RUN-CHECK (STATUS OPERATION)
   <COND
     (<NOT <0? .STATUS>>
-      <PRINC "zorkinstall: operation failed: ">
+      <PRINC "zorkinstall: process failed: ">
       <PRINC .OPERATION>
       <PRINC " (exit ">
       <PRINC .STATUS>
@@ -20,15 +28,11 @@
     <PRINC .VERSION>
     <PRINC ,NL>
 
-    <INSTALL-CHECK
-      <GIRGOL-CHMOD .SEED 420>
-      <STRING "make seed writable for " .VERSION>>
-
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE "rm" ["-f" .SEED] "">
       <STRING "remove previous seed for " .VERSION>>
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         ,MDLI
         []
@@ -41,7 +45,7 @@
           ,NL>>
       <STRING "generate seed for " .VERSION>>
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE "test" ["-s" .SEED] "">
       <STRING "verify generated seed for " .VERSION>>
 
@@ -69,11 +73,11 @@
       <GIRGOL-CHDIR ,ROOT>
       "return to repository root">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE "mkdir" ["-p" .DEST] "">
       <STRING "create game directory " .VERSION>>
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["-R" .SOURCE .DEST]
@@ -98,25 +102,25 @@
     <SET BIN <STRING .OUT "/bin">>
     <SET EXPECT <STRING .EXPECT-PREFIX "/bin/expect">>
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE "test" ["-x" .EXPECT] "">
       "check Expect executable">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "mkdir"
         ["-p" .SHARE .LIBEXEC .BIN]
         "">
       "create installation directories">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "ln"
         ["-s" .EXPECT <STRING .LIBEXEC "/expect">]
         "">
       "install Expect link">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["-R" "dungeon_3_2b" .SHARE]
@@ -128,7 +132,7 @@
     <INSTALL-GAME "791211" .SHARE>
     <INSTALL-GAME "810722" .SHARE>
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["-R"
@@ -139,7 +143,7 @@
         "">
       "install reference trees">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["zork-run-scripts/zorkmenu.mud"
@@ -149,14 +153,14 @@
         "">
       "install MDL runtime scripts">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["zork-run-scripts/zork-restore.exp" .LIBEXEC]
         "">
       "install Expect restore script">
 
-    <INSTALL-CHECK
+    <INSTALL-RUN-CHECK
       <GIRGOL-EXECUTE
         "cp"
         ["zork-run-scripts/zork-mdl" .BIN]
