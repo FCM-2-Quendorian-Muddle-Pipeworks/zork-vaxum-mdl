@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu
 
-bin_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+script=$(readlink -f -- "$0")
+bin_dir=$(CDPATH= cd -- "$(dirname -- "$script")" && pwd -P)
 prefix=$(CDPATH= cd -- "$bin_dir/.." && pwd -P)
 
 share="$prefix/share/zork-vaxum-mdl"

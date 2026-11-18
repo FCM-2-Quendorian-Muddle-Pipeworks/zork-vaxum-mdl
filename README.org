@@ -1,4 +1,4 @@
-This is =zork-vaxum-mdl=, a package intended to be used with the MDL interpreter Convolution to make playing old PDP-10 and other early versions of the text adventure/interactive fiction classic Zork more easily accessible/playable.
+This is =zork-vaxum-mdl=, a package intended to be used with the [[id:93b318bd-90ba-4430-b38d-e7fb1f726a52][MDL]] interpreter [[https://github.com/FCM-2-Quendorian-Muddle-Pipeworks/convolution-mdl][Convolution]] to make playing [[https://en.wikipedia.org/wiki/Zork#Inception][old PDP-10 and other early versions of the text adventure/interactive fiction classic Zork]] more easily accessible/playable.
 
 On early versions of Zork, see also [[https://en.wikipedia.org/wiki/Andrew_Plotkin][Andrew Plotkin]]'s (=Zarf's) [[https://eblong.com/infocom/#zorkmdl][The Obsessively Complete Infocom Catalog]].
 
@@ -6,6 +6,8 @@ On early versions of Zork, see also [[https://en.wikipedia.org/wiki/Andrew_Plotk
 :PROPERTIES:
 :CUSTOM_ID: mainframe-zork-for-confusion
 :END:
+[from: https://github.com/heasm66/mdlzork/tree/master]
+
 These are the currently known MDL sources of the mainframe Zork. I have
 slightly changed the code to make it runnable in Matthew Russottos's
 /Confusion/, the MDL emulator, “a MDL interpreter which works just well
@@ -62,3 +64,6 @@ creating the original Zork and to Matthew Russotto for building
 (For a modern version of Zork, I recommend Jeff Claar's C++ adaption.
 This version is carefully made from the 810722 MDL source. See
 https://bitbucket.org/jclaar3/zork/src/master/)
+
+* More early notes on MDL interpreters
+- See the README at [[https://github.com/FCM-2-Quendorian-Muddle-Pipeworks/convolution-mdl][Convolution-MDL]].
