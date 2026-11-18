@@ -1,7 +1,7 @@
 <FLOAD
-  <STRING
-    <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
-    "/zorkrun.mud">>
+ <STRING
+  <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
+  "/zorkrun.mud">>
 
 <SETG ZORK-MENU-ROOT <GIRGOL-GETCWD>>
 
@@ -22,13 +22,12 @@
         <VECTOR .RUNNER>>>
 
     <COND
-    ((==? .STATUS 0)
-    T)
+      ((==? .STATUS 0)
+       T)
       (T
        <PRINC "Dungeon exited with status ">
        <PRINC .STATUS>
        <TERPRI>)>>>
-
 
 <DEFINE ZORK-MENU-PRINT ()
   <PRINC "Zork: Vaxum MDL">
@@ -92,27 +91,31 @@
           <ERROR "CANNOT-ENTER-ZORK-DIRECTORY" .DATA>)>
 
        <FLOAD
-        <STRING
-         <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
-         "/zorkintro.mud">>
+         <STRING
+           <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
+           "/zorkintro.mud">>
 
        <ZORK-MENU-INTRO>
 
        <SET STATUS
          <COND
            (.NEW-GAME
-            <GIRGOL-EXECUTE "mdli"
+            <GIRGOL-EXECUTE
+              "mdli"
               <VECTOR "-r" .BOOT>>)
 
            ((OR <==? .VERSION "771212">
                 <==? .VERSION "780124">)
-            <GIRGOL-EXECUTE "mdli"
+            <GIRGOL-EXECUTE
+              "mdli"
               <VECTOR "-r" .PLAYER-SAVE>>)
 
            (T
-            <GIRGOL-EXECUTE .EXPECT
+            <GIRGOL-EXECUTE
+              .EXPECT
               <VECTOR
-                <STRING .PREFIX
+                <STRING
+                  .PREFIX
                   "/libexec/zork-vaxum-mdl/zork-restore.exp">
                 "mdli"
                 .BOOT>>)>>
@@ -122,7 +125,8 @@
           <ERROR "CANNOT-RETURN-TO-MENU-DIRECTORY">)>
 
        <COND
-         ((==? .STATUS 0) T)
+         ((==? .STATUS 0)
+          T)
          (T
           <PRINC "Zork exited with status ">
           <PRINC .STATUS>
@@ -150,7 +154,6 @@
        <PRINC "Returning to menu.">
        <TERPRI>)>>>
 
-
 <DEFINE ZORK-MENU-LOOP ()
   <PROG
     ((CHOICE <>))
@@ -163,26 +166,31 @@
       (<OR <==? .CHOICE Q> <==? .CHOICE q>>
        <PRINC "Goodbye.">
        <TERPRI>)
+
       (<==? .CHOICE 1>
-       <ZORK-MENU-RUN "771212" T>
+       <ZORK-MENU-START "771212">
        <ZORK-MENU-LOOP>)
+
       (<==? .CHOICE 2>
        <ZORK-MENU-START "780124">
        <ZORK-MENU-LOOP>)
+
       (<==? .CHOICE 3>
        <ZORK-MENU-START "791211">
        <ZORK-MENU-LOOP>)
+
       (<==? .CHOICE 4>
        <ZORK-MENU-START "810722">
        <ZORK-MENU-LOOP>)
+
       (<==? .CHOICE 5>
        <ZORK-MENU-DUNGEON>
        <ZORK-MENU-LOOP>)
+
       (ELSE
        <PRINC "Invalid choice.">
        <TERPRI>
        <ZORK-MENU-LOOP>)>>>
-
 
 <DEFINE ZORK-MENU ()
   <ZORK-MENU-LOOP>>
