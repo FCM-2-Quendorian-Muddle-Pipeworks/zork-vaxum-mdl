@@ -1,20 +1,20 @@
 <FLOAD
   <STRING
-    <GIRGOL-GETENV "CONFUSION_MDL_SHARE">
+    <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
     "/zorkrun.mud">>
 
 <SETG ZORK-MENU-ROOT <GIRGOL-GETCWD>>
 
 <DEFINE ZORK-MENU-DUNGEON ()
   <PROG
-    ((PREFIX <GIRGOL-GETENV "CONFUSION_MDL_PREFIX">)
+    ((PREFIX <GIRGOL-GETENV "ZORK_VAXUM_MDL_PREFIX">)
      (RUNNER <>)
      (STATUS <>))
 
     <SET RUNNER
       <STRING
         .PREFIX
-        "/libexec/confusion-mdl/dungeon-3.2b-run">>
+        "/libexec/zork-vaxum-mdl/dungeon-3.2b-run">>
 
     <SET STATUS
       <GIRGOL-EXECUTE
@@ -31,7 +31,7 @@
 
 
 <DEFINE ZORK-MENU-PRINT ()
-  <PRINC "Confusion MDL — Zork">
+  <PRINC "Zork: Vaxum MDL">
   <TERPRI>
   <TERPRI>
   <PRINC "  1. Zork 1977-12-12 (500 points; no end-game)">
@@ -50,11 +50,11 @@
 
 <DEFINE ZORK-MENU-RUN (VERSION NEW-GAME)
   <PROG
-    ((SHARE <GIRGOL-GETENV "CONFUSION_MDL_SHARE">)
-     (DATA-ROOT <GIRGOL-GETENV "CONFUSION_MDL_DATA_ROOT">)
-     (EXPECT <GIRGOL-GETENV "CONFUSION_MDL_EXPECT">)
-     (PREFIX <GIRGOL-GETENV "CONFUSION_MDL_PREFIX">)
-     (TIMESTAMP <GIRGOL-GETENV "CONFUSION_MDL_TIMESTAMP">)
+    ((SHARE <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">)
+     (DATA-ROOT <GIRGOL-GETENV "ZORK_VAXUM_MDL_DATA_ROOT">)
+     (EXPECT <GIRGOL-GETENV "ZORK_VAXUM_MDL_EXPECT">)
+     (PREFIX <GIRGOL-GETENV "ZORK_VAXUM_MDL_PREFIX">)
+     (TIMESTAMP <GIRGOL-GETENV "ZORK_VAXUM_MDL_TIMESTAMP">)
      (SOURCE <>)
      (DATA <>)
      (BOOT <>)
@@ -93,7 +93,7 @@
 
        <FLOAD
         <STRING
-         <GIRGOL-GETENV "CONFUSION_MDL_SHARE">
+         <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
          "/zorkintro.mud">>
 
        <ZORK-MENU-INTRO>
@@ -113,7 +113,7 @@
             <GIRGOL-EXECUTE .EXPECT
               <VECTOR
                 <STRING .PREFIX
-                  "/libexec/confusion-mdl/zork-restore.exp">
+                  "/libexec/zork-vaxum-mdl/zork-restore.exp">
                 "mdli"
                 .BOOT>>)>>
 
