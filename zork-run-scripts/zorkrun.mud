@@ -1,3 +1,4 @@
+
 <DEFINE ZORK-RUN-CHECK (RESULT OPERATION)
   <COND
     (<==? .RESULT 0>
@@ -12,9 +13,7 @@
      <ERROR "ZORK-RUNNER-OPERATION-FAILED" .OPERATION .RESULT>)>>
 
 <DEFINE ZORK-RUN-EXISTS? (PATH)
-  <COND
-    (<GIRGOL-STAT .PATH> T)
-    (T #FALSE ())>>
+  <==? <GIRGOL-EXECUTE "test" <VECTOR "-e" .PATH>> 0>>
 
 <DEFINE ZORK-RUN-COPY (SOURCE DESTINATION)
   <ZORK-RUN-CHECK
@@ -101,15 +100,11 @@
     ;"Archive the previous player save before starting a new game."
     <COND
       (.NEW-GAME
-       <ZORK-RUN-ARCHIVE .CURRENT .HISTORY .TIMESTAMP>
-       <COND
-         ((ZORK-RUN-EXISTS? .CURRENT)
-          <ZORK-RUN-REQUIRE
-            <GIRGOL-UNLINK .CURRENT>
-            "remove previous player save">)>)
+       <ZORK-RUN-ARCHIVE .CURRENT .HISTORY .TIMESTAMP>)
       (T T)>
 
     ;"Initialize the new player save from the pristine interpreter image."
+    ;"Copying replaces an existing destination; no unlink is necessary."
     <COND
       (.NEW-GAME
        <ZORK-RUN-COPY .INITIAL .CURRENT>)
