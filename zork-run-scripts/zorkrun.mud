@@ -110,4 +110,4 @@
        <ZORK-RUN-COPY .INITIAL .CURRENT>)
       (T T)>
 
-    .CURRENT>>
+   .SEED>>

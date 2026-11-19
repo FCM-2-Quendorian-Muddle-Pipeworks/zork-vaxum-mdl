@@ -1,25 +1,17 @@
-<FLOAD
- <STRING
-  <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
-  "/zorkrun.mud">>
+<FLOAD "zorkrun.mud">
 
 <SETG ZORK-MENU-ROOT <GIRGOL-GETCWD>>
 
 <DEFINE ZORK-MENU-DUNGEON ()
   <PROG
-    ((PREFIX <GIRGOL-GETENV "ZORK_VAXUM_MDL_PREFIX">)
-     (RUNNER <>)
+    ((RUNNER
+      <STRING
+        ,ZORK-MENU-ROOT
+        "/../../libexec/zork-vaxum-mdl/dungeon-3.2b-run">)
      (STATUS <>))
 
-    <SET RUNNER
-      <STRING
-        .PREFIX
-        "/libexec/zork-vaxum-mdl/dungeon-3.2b-run">>
-
     <SET STATUS
-      <GIRGOL-EXECUTE
-        "sh"
-        <VECTOR .RUNNER>>>
+      <GIRGOL-EXECUTE "sh" <VECTOR .RUNNER>>>
 
     <COND
       ((==? .STATUS 0)
@@ -47,21 +39,68 @@
   <TERPRI>
   <TERPRI>>
 
+<DEFINE ZORK-MENU-PLAY (VERSION NEW-GAME BOOT PLAYER-SAVE)
+  <PROG
+    ((RESTORE-SCRIPT
+      <STRING
+        ,ZORK-MENU-ROOT
+        "/../../libexec/zork-vaxum-mdl/zork-restore.exp">)
+     (STATUS <>))
+
+    <COND
+      (<NOT <GIRGOL-CHDIR
+              <STRING
+                <GIRGOL-GETENV "ZORK_VAXUM_MDL_DATA_ROOT">
+                "/" .VERSION>>>
+       <ERROR "CANNOT-ENTER-ZORK-DIRECTORY" .VERSION>)>
+
+    <FLOAD
+      <STRING ,ZORK-MENU-ROOT "/zorkintro.mud">>
+
+    <SET STATUS
+      <COND
+        (.NEW-GAME
+         <GIRGOL-EXECUTE
+           "mdli"
+           <VECTOR "-r" .BOOT>>)
+
+        ((OR <==? .VERSION "771212">
+             <==? .VERSION "780124">)
+         <GIRGOL-EXECUTE
+           "mdli"
+           <VECTOR "-r" .PLAYER-SAVE>>)
+
+        (T
+         <GIRGOL-EXECUTE
+          "expect"
+          <VECTOR .RESTORE-SCRIPT .BOOT>>)>>
+
+    <COND
+      (<NOT <GIRGOL-CHDIR ,ZORK-MENU-ROOT>>
+       <ERROR "CANNOT-RETURN-TO-MENU-DIRECTORY">)>
+
+    <COND
+      ((==? .STATUS 0)
+       T)
+      (T
+       <PRINC "Zork exited with status ">
+       <PRINC .STATUS>
+       <TERPRI>)>>>
+
 <DEFINE ZORK-MENU-RUN (VERSION NEW-GAME)
   <PROG
-    ((SHARE <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">)
-     (DATA-ROOT <GIRGOL-GETENV "ZORK_VAXUM_MDL_DATA_ROOT">)
-     (EXPECT <GIRGOL-GETENV "ZORK_VAXUM_MDL_EXPECT">)
-     (PREFIX <GIRGOL-GETENV "ZORK_VAXUM_MDL_PREFIX">)
+    ((DATA-ROOT <GIRGOL-GETENV "ZORK_VAXUM_MDL_DATA_ROOT">)
      (TIMESTAMP <GIRGOL-GETENV "ZORK_VAXUM_MDL_TIMESTAMP">)
      (SOURCE <>)
      (DATA <>)
      (BOOT <>)
-     (PLAYER-SAVE <>)
-     (STATUS <>))
+     (PLAYER-SAVE <>))
 
     <SET SOURCE
-      <STRING .SHARE "/mdlzork_" .VERSION "/patched_confusion">>
+      <STRING
+        ,ZORK-MENU-ROOT
+        "/mdlzork_" .VERSION
+        "/patched_confusion">>
 
     <SET DATA <STRING .DATA-ROOT "/" .VERSION>>
 
@@ -80,57 +119,17 @@
            "/MTRZORK/ZORK.SAVE")>>>
 
     <COND
-      ((AND <NOT .NEW-GAME>
-            <NOT <ZORK-RUN-EXISTS? .PLAYER-SAVE>>)
-       <PRINC "No saved game exists for this version.">
-       <TERPRI>)
+      (.NEW-GAME
+       <ZORK-MENU-PLAY
+         .VERSION .NEW-GAME .BOOT .PLAYER-SAVE>)
+
+      ((ZORK-RUN-EXISTS? .PLAYER-SAVE)
+       <ZORK-MENU-PLAY
+         .VERSION .NEW-GAME .BOOT .PLAYER-SAVE>)
 
       (T
-       <COND
-         (<NOT <GIRGOL-CHDIR .DATA>>
-          <ERROR "CANNOT-ENTER-ZORK-DIRECTORY" .DATA>)>
-
-       <FLOAD
-         <STRING
-           <GIRGOL-GETENV "ZORK_VAXUM_MDL_SHARE">
-           "/zorkintro.mud">>
-
-       <ZORK-MENU-INTRO>
-
-       <SET STATUS
-         <COND
-           (.NEW-GAME
-            <GIRGOL-EXECUTE
-              "mdli"
-              <VECTOR "-r" .BOOT>>)
-
-           ((OR <==? .VERSION "771212">
-                <==? .VERSION "780124">)
-            <GIRGOL-EXECUTE
-              "mdli"
-              <VECTOR "-r" .PLAYER-SAVE>>)
-
-           (T
-            <GIRGOL-EXECUTE
-              .EXPECT
-              <VECTOR
-                <STRING
-                  .PREFIX
-                  "/libexec/zork-vaxum-mdl/zork-restore.exp">
-                "mdli"
-                .BOOT>>)>>
-
-       <COND
-         (<NOT <GIRGOL-CHDIR ,ZORK-MENU-ROOT>>
-          <ERROR "CANNOT-RETURN-TO-MENU-DIRECTORY">)>
-
-       <COND
-         ((==? .STATUS 0)
-          T)
-         (T
-          <PRINC "Zork exited with status ">
-          <PRINC .STATUS>
-          <TERPRI>)>)>>>
+       <PRINC "No saved game exists for this version.">
+       <TERPRI>)>>>
 
 <DEFINE ZORK-MENU-START (VERSION)
   <PROG
@@ -148,8 +147,10 @@
     <COND
       (<==? .ACTION 1>
        <ZORK-MENU-RUN .VERSION <>>)
+
       (<==? .ACTION 2>
        <ZORK-MENU-RUN .VERSION T>)
+
       (ELSE
        <PRINC "Returning to menu.">
        <TERPRI>)>>>

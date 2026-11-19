@@ -1,16 +1,15 @@
-#!/usr/bin/expect -f
+#!/usr/bin/env expect
 
 set timeout 60
 
-if {$argc != 2} {
-    send_user "Usage: zork-restore.exp MDLI BOOT_FILE\n"
+if {$argc != 1} {
+    send_user "Usage: zork-restore.exp BOOT_FILE\n"
     exit 2
 }
 
-set mdli [lindex $argv 0]
-set boot_file [lindex $argv 1]
+set boot_file [lindex $argv 0]
 
-spawn -noecho $mdli -r $boot_file
+spawn -noecho mdli -r $boot_file
 
 # Wait for the initial game prompt.
 expect {

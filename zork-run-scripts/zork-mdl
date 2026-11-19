@@ -4,8 +4,12 @@ set -eu
 script=$(readlink -f -- "$0")
 bin_dir=$(CDPATH= cd -- "$(dirname -- "$script")" && pwd -P)
 prefix=$(CDPATH= cd -- "$bin_dir/.." && pwd -P)
-
 share="$prefix/share/zork-vaxum-mdl"
+
+if [ ! -d "$share" ]; then
+    printf 'Zork data directory not found: %s\n' "$share" >&2
+    exit 1
+fi
 
 if [ ! -t 0 ] || [ ! -t 1 ]; then
     if ! command -v xdg-terminal-exec >/dev/null 2>&1; then
@@ -17,7 +21,7 @@ if [ ! -t 0 ] || [ ! -t 1 ]; then
 
     exec xdg-terminal-exec \
         --title='Zork: Vaxum MDL' \
-        -- "$0" "$@"
+        -- "$script" "$@"
 fi
 
 if ! mdli=$(command -v mdli); then
@@ -27,11 +31,9 @@ if ! mdli=$(command -v mdli); then
     exit 1
 fi
 
-export ZORK_VAXUM_MDL_PREFIX="$prefix"
-export ZORK_VAXUM_MDL_SHARE="$share"
-export ZORK_VAXUM_MDL_EXPECT="$prefix/libexec/zork-vaxum-mdl/expect"
 export ZORK_VAXUM_MDL_DATA_ROOT="${XDG_DATA_HOME:-${HOME:?}/.local/share}/zork-vaxum-mdl"
 export ZORK_VAXUM_MDL_TIMESTAMP
 ZORK_VAXUM_MDL_TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
 
-exec "$mdli" -f "$share/zorkmenu.mud" "$@"
+cd "$share"
+exec "$mdli" -f zorkmenu.mud "$@"
