@@ -21,7 +21,7 @@ expect {
         exit 124
     }
     eof {
-        send_user "\nConfusion exited before the Zork prompt.\n"
+        send_user "\nConvolution (Confusion) MDL interpreter exited before the Zork prompt.\n"
         exit 1
     }
 }
@@ -57,7 +57,7 @@ expect {
         exit 124
     }
     eof {
-        send_user "\nConfusion exited during game restore.\n"
+        send_user "\nConvolution (Confusion) MDL interpreter exited during game restore.\n"
         exit 1
     }
 }
