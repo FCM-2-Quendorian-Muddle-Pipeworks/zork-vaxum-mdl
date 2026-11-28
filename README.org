@@ -3,6 +3,14 @@ This is =zork-vaxum-mdl=, a package intended to be used with the [[id:93b318bd-9
 
 On early versions of Zork, see also [[https://en.wikipedia.org/wiki/Andrew_Plotkin][Andrew Plotkin]]'s (=Zarf's) [[https://eblong.com/infocom/#zorkmdl][The Obsessively Complete Infocom Catalog]].
 
+[[./images/screenshots/PRE-VAXUM.png]]
+
+[[./images/screenshots/VAXUM0.png]]
+
+[[./images/screenshots/ZORK-USNDR-1977.png]]
+
+[[./images/screenshots/ZORK-troll-unbound-by-either-LVAL-nor-GVAL.png]]
+
 * Mainframe Zork for Confusion [Henrik Åsman's patched update README info]
 :PROPERTIES:
 :CUSTOM_ID: mainframe-zork-for-confusion
