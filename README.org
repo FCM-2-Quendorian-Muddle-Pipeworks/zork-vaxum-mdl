@@ -1,3 +1,4 @@
+* ~Zork~: /vaxum/ MDL
 This is =zork-vaxum-mdl=, a package intended to be used with the [[id:93b318bd-90ba-4430-b38d-e7fb1f726a52][MDL]] interpreter [[https://github.com/FCM-2-Quendorian-Muddle-Pipeworks/convolution-mdl][Convolution]] to make playing [[https://en.wikipedia.org/wiki/Zork#Inception][old PDP-10 and other early versions of the text adventure/interactive fiction classic Zork]] more easily accessible/playable.
 
 On early versions of Zork, see also [[https://en.wikipedia.org/wiki/Andrew_Plotkin][Andrew Plotkin]]'s (=Zarf's) [[https://eblong.com/infocom/#zorkmdl][The Obsessively Complete Infocom Catalog]].
